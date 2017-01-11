@@ -135,7 +135,7 @@ There are numerous optimizations that can be done:
     }
 ```
 
-3. Replace _Linear_ search with _Binary Seach_
+3\. Replace _Linear_ search with _Binary Seach_
 
 Here is an optimized 72 LOC version:
 
