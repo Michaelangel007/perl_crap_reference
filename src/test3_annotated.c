@@ -1,4 +1,4 @@
-// Perl: The Complete Reference, Page 638, 1999, ISBN: 0-07-212000-2
+// Perl: The Complete Reference (1st Ed.), Chapter 19, Perl Compiler, Page 638, 1999, ISBN: 0-07-212000-2
 #include <stdio.h>
                                         // *facepalm* Can't even compile due to missing: #include <string.h>
 

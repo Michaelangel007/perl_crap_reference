@@ -1,6 +1,7 @@
 # Perl: The Complete (Crap) Reference
 
-In Chapter 19, _Perl Compiler_, Page 638, the author compares Perl with C.
+In [Per](https://www.amazon.com/Python-Complete-Reference-Martin-Brown/dp/007212718X/),
+Chapter 19, _Perl Compiler_, Page 638, the author compares the speed of Perl with C.
 He gives various small examples:
 
 * count the number of lines (test2)
@@ -125,17 +126,18 @@ There are numerous optimizations that can be done:
 2. Compute FNV1a hash on-the-fly
 
 ```C++
-const uint32_t FNV1A_PRIME = 0x01000193; //   16777619
-const uint32_t FNV1A_SEED  = 0x811C9DC5; // 2166136261
+    const uint32_t FNV1A_PRIME = 0x01000193; //   16777619
+    const uint32_t FNV1A_SEED  = 0x811C9DC5; // 2166136261
 
-inline uint32_t fnv1a( unsigned char byte, uint32_t hash = FNV1A_SEED )
-{
-      return (byte ^ hash) * FNV1A_PRIME;
-}
+    inline uint32_t fnv1a( unsigned char byte, uint32_t hash = FNV1A_SEED )
+    {
+          return (byte ^ hash) * FNV1A_PRIME;
+    }
 ```
+
 3. Replace _Linear_ search with _Binary Seach_
 
-Here is an optiized 72 LOC version
+Here is an optimized 72 LOC version:
 
 ```
     #include <stdio.h>    // printf()
