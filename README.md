@@ -27,7 +27,7 @@ Here is the `test3` Perl program:
 
 Here is the author's "equivalent" C version:
 
-```C
+```c
     // Perl: The Complete Reference (1st Ed.), Chapter 19, Perl Compiler, Page 638, 1999, ISBN: 0-07-212000-2
     #include <stdio.h>
 
@@ -125,7 +125,7 @@ There are numerous optimizations that can be done:
 1. Read entire file into memory
 2. Compute FNV1a hash on-the-fly
 
-```C++
+```cpp
     const uint32_t FNV1A_PRIME = 0x01000193; //   16777619
     const uint32_t FNV1A_SEED  = 0x811C9DC5; // 2166136261
 
@@ -139,7 +139,7 @@ There are numerous optimizations that can be done:
 
 Here is an optimized 72 LOC version:
 
-```
+```c
     #include <stdio.h>    // printf()
     #include <string.h>   // memmove()
     #include <stdint.h>   // uint32_t
