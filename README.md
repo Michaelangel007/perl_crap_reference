@@ -93,7 +93,7 @@ Table 19-8 has benchmark times showing that the Perl version is faster then the 
 
 First, where is the _data file_ to independently verify the timing???
 
-Second, except this an _apples-to-oranges_comparision -- **different algorithms** are used!
+Second, except this an _apples-to-oranges_comparision_ -- **different algorithms** are used!
 Of course the Perl version is faster.  **No shit, Sherlock.** 
 Obviously, the _better algorithm_ in a slower language
 is going to "win" against the _worse algorithm_ in a faster language!
