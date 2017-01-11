@@ -1,6 +1,6 @@
 # Perl: The Complete (Crap) Reference
 
-In [Per](https://www.amazon.com/Python-Complete-Reference-Martin-Brown/dp/007212718X/),
+In [Perl: The Complete Reference](https://www.amazon.com/Perl-Complete-Reference-Martin-Brown/dp/0072120002/),
 Chapter 19, _Perl Compiler_, Page 638, the author compares the speed of Perl with C.
 He gives various small examples:
 
