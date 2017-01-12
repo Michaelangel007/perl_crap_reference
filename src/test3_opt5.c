@@ -68,7 +68,7 @@ int main()
     FILE  *data = fopen( filename, "rb" );
     size_t size = stat( filename, &info ) ? 0 : (size_t) info.st_size;
 
-    char    *buf = (char*) malloc( size+1 );
+    unsigned char *buf = (unsigned char*) malloc( size+1 );
     uint32_t hash;
 
     if( data )
@@ -77,7 +77,7 @@ int main()
         buf[ size ] = 0;
         fclose( data );
 
-        char *p = buf;
+        unsigned char *p = buf;
 
         do
         {

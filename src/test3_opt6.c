@@ -83,7 +83,7 @@ int main( const int nArg, const char *aArg[] )
     FILE  *data = fopen( filename, "rb" );
     size_t size = stat( filename, &info ) ? 0 : (size_t) info.st_size;
 
-    char *buf = (char*) malloc( size+1 );
+    unsigned char *buf = (unsigned char*) malloc( size+2 );
 
 // BEGIN OMP
     int iThread;
