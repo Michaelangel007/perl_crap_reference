@@ -18,6 +18,8 @@ Optimized 5
     const uint32_t FNV1A_PRIME = 0x01000193; //   16777619
     const uint32_t FNV1A_SEED  = 0x811C9DC5; // 2166136261
 
+    #define SPC 0x20
+
     #define MAX_WORDS  80000
 
     size_t   gnWords = 0;
@@ -64,22 +66,28 @@ int main()
     FILE  *data = fopen( filename, "rb" );
     size_t size = stat( filename, &info ) ? 0 : (size_t) info.st_size;
 
-    char    *p  = (char*) malloc( size+1 );
+    char    *buf = (char*) malloc( size+1 );
     uint32_t hash;
 
-    fread( p, size, 1, data );
-    p[ size ] = 0;
-
-    do
+    if( data )
     {
-        hash = FNV1A_SEED;
-        while( *p > 0x20 )
-            hash =  (*p++ ^ hash) * FNV1A_PRIME;
+        fread( buf, size, 1, data );
+        buf[ size ] = 0;
+        fclose( data );
 
-        find_key_insert( hash );
+        char *p = buf;
 
-        p++; // skip LF = 0x0A
-    } while( *p );
+        do
+        {
+            hash = FNV1A_SEED;
+            while( *p > SPC )
+                hash =  (*p++ ^ hash) * FNV1A_PRIME;
+
+            find_key_insert( hash );
+
+            p++; // skip LF = 0x0A
+        } while( *p );
+    }
 
     printf( "= Mem =\n" );
     printf( "  File buffer: %lu\n", (unsigned long) size+1 );

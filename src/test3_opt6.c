@@ -31,11 +31,11 @@ Optimized 6
     unsigned ganOffsetEnd[ MAX_THREADS ]; // File Offset End   per thread
 // END OMP
 
-    #define LF  0x0A
-    #define SPC 0x20
-
     const uint32_t FNV1A_PRIME = 0x01000193; //   16777619
     const uint32_t FNV1A_SEED  = 0x811C9DC5; // 2166136261
+
+    #define LF  0x0A
+    #define SPC 0x20
 
     size_t gnWords = 0;
 
@@ -82,7 +82,7 @@ int main( const int nArg, const char *aArg[] )
     FILE  *data = fopen( filename, "rb" );
     size_t size = stat( filename, &info ) ? 0 : (size_t) info.st_size;
 
-    char    *buf = (char*) malloc( size+2 );
+    char *buf = (char*) malloc( size+1 );
 
 // BEGIN OMP
     int iThread;
@@ -130,12 +130,16 @@ int main( const int nArg, const char *aArg[] )
 
 // END OMP
 
+    if( !data )
+        return printf( "ERROR: Couldn't open input file: %s\n", filename );
+
     if( !buf )
         return printf( "ERROR: Couldn't allocate memory for file\n" );
 
     fread( buf, size, 1, data );
-    buf[ size+1 ] = LF;
-    buf[ size+2 ] = 0;
+    buf[ size ] = 0;
+
+    fclose( data );
 
 // BEGIN OMP
 

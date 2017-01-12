@@ -40,11 +40,16 @@ int main()
     char line[ MAX_STRING+1 ];
     FILE *data = fopen( "words.txt", "r" );
 
-    while( !feof( data ) )
+    if( data )
     {
-        fgets( line, MAX_STRING, data );
-        AddToList( line );
+        while( !feof( data ) )
+        {
+            fgets( line, MAX_STRING, data );
+            AddToList( line );
+        }
     }
+
+    fclose( data );
 
     printf( "= Mem =\n" );
     printf( "  File buffer: %lu\n", (unsigned long) sizeof( line ) );
