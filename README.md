@@ -275,25 +275,29 @@ See [test3 opt6.c](src/test3_opt6.c)
 
 # Benchmarks
 
-Using a dictinary of 79,339 words from [data/words.txt](data/words.txt):
+Using a dictinary of 79,339 words from [data/words.txt](data/words.txt)
+Here are the `test3` metrics:
 
-|Description             | Time   | Memory (bytes) |
-|:-----------------------|-------:|---------------:|
-|Perl Test3 version      | 0.060s |     13,283,328 |
-|Fixed C Test3 v1        |22.944s |     20,480,256 |
-|Optimized C Test3 v1    | 0.911s |        320,256 |
-|Optimized C Test3 v2    | 0.917s |        934,671 |
-|Optimized C Test3 v3    | 0.181s |        934,671 |
-|Optimized C Test3 v4    | 0.179s |        934,671 |
-|Optimized C Test3 v5    | 0.182s |        934,671 |
-|OpenMP C Test3 threads 1| 0.179s |      3,073,350 |
-|OpenMP C Test3 threads 2| 0.045s |      3,073,350 |
-|OpenMP C Test3 threads 3| 0.024s |      3,073,350 |
-|OpenMP C Test3 threads 4| 0.017s |      3,073,342 |
-|OpenMP C Test3 threads 5| 0.013s |      3,073,350 |
-|OpenMP C Test3 threads 6| 0.010s |      3,073,350 |
-|OpenMP C Test3 threads 7| 0.010s |      3,073,350 |
-|OpenMP C Test3 threads 8| 0.009s |      3,073,326 |
+|Command        |Description             | Time   | Memory (bytes) |
+|:--------------|:-----------------------|-------:|---------------:|
+|`perl test3.pl`|Perl                    | 0.061s |     13,283,328 |
+|`test3opt1`    |Fixed C Test3           |22.944s |     20,480,256 |
+|`test3opt2`    |FNV1a Hash              | 0.911s |        320,256 |
+|`test3opt3`    |Read file into memory   | 0.917s |        934,671 |
+|`test3opt4`    |Binary search           | 0.181s |        934,671 |
+|`test3opt5`    |Merged BinSearchInsKey  | 0.179s |        934,671 |
+|`test3opt6 -j1`|OpenMP 1 thread         | 0.182s |      3,073,350 |
+|`test3opt6 -j1`|OpenMP 2 threads        | 0.045s |      3,073,350 |
+|`test3opt6 -j1`|OpenMP 3 threads        | 0.024s |      3,073,350 |
+|`test3opt6 -j1`|OpenMP 4 threads        | 0.017s |      3,073,342 |
+|`test3opt6 -j1`|OpenMP 5 threads        | 0.013s |      3,073,350 |
+|`test3opt6 -j1`|OpenMP 6 threads        | 0.010s |      3,073,350 |
+|`test3opt6 -j1`|OpenMP 7 threads        | 0.010s |      3,073,350 |
+|`test3opt6 -j1`|OpenMP 7 threads        | 0.009s |      3,073,326 |
+
+The hashing proves that this program is CPU bound -- the majority
+of time is checking to see if an word is unique; that is,
+does this word exist in the unique word list? If not, add it.
 
 While the single threaded optimized C version is half as slow,
 it only uses 7.0% of the memory of the bloated Perl version.

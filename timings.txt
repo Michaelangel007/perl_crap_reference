@@ -1,8 +1,11 @@
+File: test3.pl
 79339 unique lines
 
 real	0m0.061s
 user	0m0.052s
 sys	0m0.007s
+
+File: test3v1
 = Mem =
   File buffer: 256
   Hash buffer: 20480000
@@ -12,6 +15,8 @@ sys	0m0.007s
 real	0m22.944s
 user	0m22.883s
 sys	0m0.035s
+
+File: test3v2
 = Mem =
   File buffer: 256
   Hash buffer: 320000
@@ -21,6 +26,8 @@ sys	0m0.035s
 real	0m0.911s
 user	0m0.906s
 sys	0m0.002s
+
+File: test3v3
 = Mem =
   File buffer: 614671
   Hash buffer: 320000
@@ -30,6 +37,8 @@ sys	0m0.002s
 real	0m0.917s
 user	0m0.912s
 sys	0m0.002s
+
+File: test3v4
 = Mem =
   File buffer: 614671
   Hash buffer: 320000
@@ -39,6 +48,8 @@ sys	0m0.002s
 real	0m0.181s
 user	0m0.177s
 sys	0m0.002s
+
+File: test3v5
 = Mem =
   File buffer: 614671
   Hash buffer: 320000
@@ -48,6 +59,7 @@ sys	0m0.002s
 real	0m0.179s
 user	0m0.175s
 sys	0m0.002s
+
 Using: 1 / 8 cores
 = Mem =
   File buffer: 614670
@@ -58,6 +70,7 @@ Using: 1 / 8 cores
 real	0m0.182s
 user	0m0.178s
 sys	0m0.002s
+
 Using: 2 / 8 cores
 = Mem =
   File buffer: 614670
@@ -68,6 +81,7 @@ Using: 2 / 8 cores
 real	0m0.045s
 user	0m0.083s
 sys	0m0.002s
+
 Using: 3 / 8 cores
 = Mem =
   File buffer: 614670
@@ -78,6 +92,7 @@ Using: 3 / 8 cores
 real	0m0.024s
 user	0m0.058s
 sys	0m0.002s
+
 Using: 4 / 8 cores
 = Mem =
   File buffer: 614670
@@ -88,6 +103,7 @@ Using: 4 / 8 cores
 real	0m0.017s
 user	0m0.047s
 sys	0m0.002s
+
 Using: 5 / 8 cores
 = Mem =
   File buffer: 614670
@@ -98,6 +114,7 @@ Using: 5 / 8 cores
 real	0m0.013s
 user	0m0.041s
 sys	0m0.002s
+
 Using: 6 / 8 cores
 = Mem =
   File buffer: 614670
@@ -108,6 +125,7 @@ Using: 6 / 8 cores
 real	0m0.010s
 user	0m0.031s
 sys	0m0.002s
+
 Using: 7 / 8 cores
 = Mem =
   File buffer: 614670
@@ -118,6 +136,7 @@ Using: 7 / 8 cores
 real	0m0.010s
 user	0m0.038s
 sys	0m0.002s
+
 Using: 8 / 8 cores
 = Mem =
   File buffer: 614670
