@@ -14,6 +14,7 @@ Optimized 5
     #include <stdint.h>   // uint32_t
     #include <stdlib.h>   // malloc()
     #include <sys/stat.h> // stat()
+
     #include "inline.h"   // INLINE
 
     const uint32_t FNV1A_PRIME = 0x01000193; //   16777619
@@ -94,7 +95,7 @@ int main()
 
     printf( "= Mem =\n" );
     printf( "  File buffer: %lu\n", (unsigned long) size+1 );
-    printf( "  Hash buffer: %lu\n", (unsigned long) sizeof( gaWords ) );
+    printf( "  Hash buffer: %lu\n", (unsigned long)          sizeof( gaWords ) );
     printf( "  ===========: %lu\n", (unsigned long) size+1 + sizeof( gaWords ) );
     printf( "%ld unique lines\n", gnWords );
 
