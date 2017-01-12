@@ -90,6 +90,8 @@ int main()
         } while( *p );
     }
 
+    free( buf );
+
     printf( "= Mem =\n" );
     printf( "  File buffer: %lu\n", (unsigned long) size+1 );
     printf( "  Hash buffer: %lu\n", (unsigned long) sizeof( gaWords ) );

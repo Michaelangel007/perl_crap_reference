@@ -14,6 +14,7 @@ Optimize 4
     #include <stdint.h>   // uint32_t
     #include <stdlib.h>   // malloc()
     #include <sys/stat.h> // stat()
+
     #include "inline.h"   // INLINE
 
     const uint32_t FNV1A_PRIME = 0x01000193; //   16777619
@@ -99,6 +100,8 @@ int main()
             p++; // skip LF = 0x0A
         } while( *p );
     }
+
+    free( buf );
 
     printf( "= Mem =\n" );
     printf( "  File buffer: %lu\n", (unsigned long) size+1 );

@@ -298,6 +298,11 @@ int main( const int nArg, const char *aArg[] )
         }
     }
 
+    free( buf );
+
+    for( iThread = 0; iThread < gnThreadsActive; iThread++ )
+        free( gapThreadData[ iThread ] );
+
     printf( "= Mem =\n" );
     printf( "  File buffer: %lu\n", (unsigned long) size                   );
     printf( "  Hash buffer: %lu  ", (unsigned long)        nThreadDataSize );
