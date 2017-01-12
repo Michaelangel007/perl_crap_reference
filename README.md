@@ -118,7 +118,7 @@ Does that make [-2,000 Lines of Code](http://www.folklore.org/StoryView.py?proje
 
 
 
-# Optimization
+# Optimizations
 
 There are numerous optimizations that can be done:
 
@@ -304,6 +304,27 @@ it only uses 7.0% of the memory of the bloated Perl version.
 
 The multithreaded optimized C version screams at ~ 0.010s!
 It also only uses 23% of the memory compared to the Perl version.
+Not for for ~300 lines of code !
+
+# TL:DR; Take-aways
+
+Reviewing the performance and time required to write these programs:
+
+|Language             |Time spent writing| Run Time |
+|:--------------------|-----------------:|:---------|
+| Perl                | 5 mins           | Good     |
+| C (single-threaded) | 1/2 day          | Poor     |
+| C (multi-threaded)  | 1 day            | Great!   |
+
+This is just anecdotal evidence that confirms the adage:
+
+_You can have either _Fast_ or _Quick_, pick one._
+
+The advantage of writing the single-threaded version is that
+you can use that to write the multi-threaded version.
+Bugs found in one will help the other version and vice versa.
+
+_Use the right tool for the right job_
 
 
 # Data
@@ -326,8 +347,12 @@ There are also public dictionaries one could use:
 
 NOTE: The .html file is actually a .zip file !
 
-```
+```sh
 wget -O eowl.zip http://dreamsteep.com/downloads/word-games-and-wordsmith-utilities/120-the-english-open-word-list-eowl/file.html
+```
+
+```sh
+wget -O 2852.txt http://www.gutenberg.org/files/2852/2852-0.txt
 ```
 
 
