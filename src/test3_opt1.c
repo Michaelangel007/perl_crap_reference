@@ -1,3 +1,13 @@
+/*
+https://github.com/Michaelangel007/perl_crap_reference
+
+Optimize 1
+
+* Cleanup hard-coded magic numbers into named constants
+* Increase max words to 80,000
+
+*/
+
     #include <stdio.h>
     #include <string.h>
 
