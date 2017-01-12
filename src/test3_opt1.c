@@ -1,12 +1,13 @@
-#include <stdio.h>
-#include <string.h>
+    #include <stdio.h>
+    #include <string.h>
 
-#define MAX_WORDS  80000
-#define MAX_STRING 255
+    #define MAX_WORDS  80000 // Increased from 30,000 to 80,000
+    #define MAX_STRING 255
 
-char gaWords[ MAX_WORDS ][ MAX_STRING+1 ]; // 2,0480,000 bytes
-long gnWords = 0;
+    long gnWords = 0;
+    char gaWords[ MAX_WORDS ][ MAX_STRING+1 ]; // 2,0480,000 bytes
 
+// ========================================================================
 void AddToList( char *word )
 {
     long i;
@@ -17,15 +18,14 @@ void AddToList( char *word )
             return;
     }
 
-    strcpy( gaWords[ gnWords++ ], word );
+    strcpy( gaWords[ gnWords++ ], word ); // Fixed off-by-one bug
 }
 
+// ========================================================================
 int main()
 {
     char line[ MAX_STRING+1 ];
-    FILE *data;
-
-    data = fopen( "words.txt", "r" );
+    FILE *data = fopen( "words.txt", "r" );
 
     while( !feof( data ) )
     {
@@ -33,7 +33,10 @@ int main()
         AddToList( line );
     }
 
-//  printf( "Allocated: %lu bytes\n", (unsigned long) sizeof( gaWords ) );
+    printf( "= Mem =\n" );
+    printf( "  File buffer: %lu\n", (unsigned long) sizeof( line )                     );
+    printf( "  Hash buffer: %lu\n", (unsigned long)                  sizeof( gaWords ) );
+    printf( "  ===========: %lu\n", (unsigned long) sizeof( line ) + sizeof( gaWords ) );
     printf( "%ld unique lines\n", gnWords );
 
     return 0;

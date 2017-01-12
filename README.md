@@ -69,18 +69,18 @@ Here is the author's "equivalent" C version:
 
 # Bugs
 
+There are _numerous_ things wrong with the C version.
 How many **noob mistakes** can you spot?
-
-There are _numerous_ things wrong with the C version:
-
-* The bloody thing doens't even compile !
-* Has an off-by-one bug!
 
 Here is the full list of everthing wrong:
 
 * [src/test3_annotated.c](src/test3_annotated.c)
 
+The 3 biggest problems are:
 
+* The bloody thing doens't even compile !
+* Has an off-by-one bug!
+* Not scalable
 
 # Apples to Oranges
 
@@ -104,7 +104,7 @@ The author gives the _excuse:_
    but that would have added significantly more liens to an already long C program.
 
 1. _No one give a shit how many lines of code C is_ -- the **entire** point of using
-  **C is for speed;** not some _bullshit metric!_
+  **C is for SPEED;** not some _bullshit metric!_
 
 Does that make [-2,000 Lines of Code](http://www.folklore.org/StoryView.py?project=Macintosh&story=Negative_2000_Lines_Of_Code.txt&sortOrder=Sort+by+Date&topic=Management) even better??
 
@@ -122,8 +122,9 @@ Does that make [-2,000 Lines of Code](http://www.folklore.org/StoryView.py?proje
 
 There are numerous optimizations that can be done:
 
-1. Read entire file into memory
-2. Compute FNV1a hash on-the-fly
+1. Read the entire file into memory at once bypassing the C library buffering.
+2. Replace the dog slow string comparision with a hash compare, [FNV1a](https://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function)
+3. Compute a FNV1a hash on-the-fly
 
 ```cpp
     const uint32_t FNV1A_PRIME = 0x01000193; //   16777619
@@ -135,11 +136,101 @@ There are numerous optimizations that can be done:
     }
 ```
 
-3\. Replace _Linear_ search with _Binary Seach_
+4\. Replace _Linear_ search with a _Binary Seach_
 
-Here is an optimized 72 LOC version:
+The typical Binary Search is given with this algorithm:
 
 ```c
+int binarysearch(datatype t, datatype *x, size_t n)
+{
+	/* Lower and upper limits and middle test value */
+	int l, u, m;
+
+	/* Initialize bounds */
+	l = 0;
+	u = n - 1;
+	
+	/* Are we done yet? */
+	while (l <= u)
+	{
+		/* Halve the range */
+		m = (l + u) / 2;
+		if (x[m] < t)
+		{
+			/* Move lower limit */
+			l = m + 1;
+		}
+		else if (x[m] == t)
+		{
+			/* A match - return its location */
+			return m;
+		}
+		else /* x[m] > t */
+		{
+			/* Move upper limit */
+			u = m - 1;
+		}
+	}
+	
+	/* Failure */
+	return -1
+}
+```
+
+Notice the crappy variable names:
+
+* `x` which means `data`
+* the lowercase L, `l`, is horrible to read in some fonts
+* `m` is ambigious; does it mean minimum? median? maximum?
+
+Also the argument order should always be:
+
+* Array Size
+* Array Pointer
+
+Here is a cleaned up version:
+
+```c
+    int BinarySearch( int size, uint32_t *data, uint32_t key )
+
+        int min = 0;
+        int mid = 0;
+        int max = size-1;
+
+        while( min <= max )
+        {
+            mid = (min + max) >> 1;
+
+            /**/ if( data[ mid ] == key )   return mid  ;
+            else if( data[ mid ] >  key )   max  = mid-1;
+            else /*              <  key )*/ min  = mid+1;
+        }
+```
+
+We can tweak that though to return the negative position of the last
+location checked which will allow us to use that as the _starting_  position
+of where the key should be inserted into the array.
+
+Even better we can _merge_ the two algorithms:
+
+* `FindKey()`
+* `InsertKey()`
+
+Into a combined version since there is common data.
+
+Here is the optimized single-threaded version [test3 opt5.c](src/test3_opt5.c):
+
+```c
+/*
+
+Optimized 5
+
+* Read entire file into memory
+* Inlined FNV1A
+* Inlined BinarySearchInsert
+
+*/
+
     #include <stdio.h>    // printf()
     #include <string.h>   // memmove()
     #include <stdint.h>   // uint32_t
@@ -152,83 +243,125 @@ Here is an optimized 72 LOC version:
 
     #define MAX_WORDS  80000
 
-    uint32_t gaWords[ MAX_WORDS ]; // 320,000 bytes
     size_t   gnWords = 0;
+    uint32_t gaWords[ MAX_WORDS ]; // 320,000 bytes
 
-    // If the key is  found, returns position > 0 where key was found
-    // If the key not found, returns -1 but with key inserted
-    INLINE int find_key_insert( uint32_t key )
+// If the key is  found, returns position >= 0 where key was found
+// If the key not found, returns -1 but with key inserted
+// ========================================================================
+INLINE int find_key_insert( uint32_t key )
+{
+    int min = 0;
+    int mid = 0;
+    int max = gnWords - 1;
+
+    while( min <= max )
     {
-        int min = 0;
-        int max = gnWords;
-        int mid = 0;
+        mid = (min + max) >> 1;
 
-        while( min <= max )
-        {
-            mid = (min + max) >> 1;
-
-            /**/ if( gaWords[ mid ] == key )   return mid+1;
-            else if( gaWords[ mid ] >  key )   max = mid-1;
-            else /*                 <  key )*/ min = mid+1;
-        }
-
-        /* */ uint32_t *src = &gaWords[ mid ];
-        /* */ uint32_t *dst = src + 1;
-        const size_t    len = gnWords - mid;
-
-        memmove( dst, src, sizeof( uint32_t ) * len ); // memcpy() can't alias (overlap)
-        gaWords[ mid ] = key;
-        gnWords++;
-
-        return -1;
+        /**/ if( gaWords[ mid ] == key )   return mid  ;
+        else if( gaWords[ mid ] >  key )   max  = mid-1;
+        else /*                 <  key )*/ min  = mid+1;
     }
 
-    int main()
+    while( (mid < gnWords) && (key > gaWords[ mid ]) )
+        mid++;
+
+    /* */ uint32_t *src = &gaWords[ mid ];
+    /* */ uint32_t *dst = src + 1;
+    const size_t    len = gnWords - mid;
+
+    memmove( dst, src, sizeof( uint32_t ) * len ); // memcpy() can't alias (overlap)
+    gaWords[ mid ] = key;
+    gnWords++;
+
+    return -1;
+}
+
+// ========================================================================
+int main()
+{
+    const char *filename = "words.txt";
+    struct stat info;
+
+    FILE  *data = fopen( filename, "rb" );
+    size_t size = stat( filename, &info ) ? 0 : (size_t) info.st_size;
+
+    char    *p  = (char*) malloc( size+1 );
+    uint32_t hash;
+
+    fread( p, size, 1, data );
+    p[ size ] = 0;
+
+    do
     {
-        const char *filename = "words.txt";
-        struct stat info;
+        hash = FNV1A_SEED;
+        while( *p > 0x20 )
+            hash =  (*p++ ^ hash) * FNV1A_PRIME;
 
-        FILE  *data = fopen( filename, "rb" );
-        size_t size = stat( filename, &info ) ? 0 : (size_t) info.st_size;
+        find_key_insert( hash );
 
-        char    *p  = (char*) malloc( size+1 );
-        uint32_t hash;
+        p++; // skip LF = 0x0A
+    } while( *p );
 
-        fread( p, size, 1, data );
-        p[ size ] = 0;
+    printf( "= Mem =\n" );
+    printf( "  File buffer: %lu\n", (unsigned long) size+1 );
+    printf( "  Hash buffer: %lu\n", (unsigned long) sizeof( gaWords ) );
+    printf( "  ===========: %lu\n", (unsigned long) size+1 + sizeof( gaWords ) );
+    printf( "%ld unique lines\n", gnWords );
 
-        do
-        {
-            hash = FNV1A_SEED;
-            while( *p > 0x20 )
-                hash =  (*p++ ^ hash) * FNV1A_PRIME;
-
-            find_key_insert( hash );
-
-            p++; // skip LF = 0x0A
-        } while( *p );
-
-        printf( "%ld unique lines\n", gnWords );
-
-        return 0;
-    }
+    return 0;
+}
 ```
+
+5\. Use multithreading. Using OpenMP this is pretty trivial using
+
+* Scatter
+  * Divide-and-Conqueor
+* Gather
+
+I've annotated the OpenMP additions via:
+
+```c
+// BEGIN OMP
+
+// END OMP
+```
+
+See [test3 opt6.c](src/test3_opt6.c)
 
 # Benchmarks
 
 Using a dictinary of 79,339 words from [data/words.txt](data/words.txt):
 
-|Description           | Time   |
-|:---------------------|-------:|
-|Perl Test3 version    | 0.060s |
-|Fixed C Test3 v1      | 0.906s |
-|Optimized C Test3 v5  | 0.182s |
+|Description             | Time   | Memory (bytes) |
+|:-----------------------|-------:|---------------:|
+|Perl Test3 version      | 0.060s |     13,283,328 |
+|Fixed C Test3 v1        |22.944s |     20,480,256 |
+|Optimized C Test3 v1    | 0.911s |        320,256 |
+|Optimized C Test3 v2    | 0.917s |        934,671 |
+|Optimized C Test3 v3    | 0.181s |        934,671 |
+|Optimized C Test3 v4    | 0.179s |        934,671 |
+|Optimized C Test3 v5    | 0.182s |        934,671 |
+|OpenMP C Test3 threads 1| 0.179s |      3,073,350 |
+|OpenMP C Test3 threads 2| 0.045s |      3,073,350 |
+|OpenMP C Test3 threads 3| 0.024s |      3,073,350 |
+|OpenMP C Test3 threads 4| 0.017s |      3,073,342 |
+|OpenMP C Test3 threads 5| 0.013s |      3,073,350 |
+|OpenMP C Test3 threads 6| 0.010s |      3,073,350 |
+|OpenMP C Test3 threads 7| 0.010s |      3,073,350 |
+|OpenMP C Test3 threads 8| 0.009s |      3,073,326 |
 
+While the single threaded optimized C version is half as slow,
+it only uses 7.0% of the memory of the bloated Perl version.
+
+The multithreaded optimized C version screams at ~ 0.010s!
+It also only uses 23% of the memory compared to the Perl version.
 
 
 # Data
 
-I used this word list:
+I used this word list: ospd.txt
 
 
 ## Wordlist
@@ -254,4 +387,4 @@ wget -O eowl.zip http://dreamsteep.com/downloads/word-games-and-wordsmith-utilit
 # References
 
 * http://stackoverflow.com/questions/6441975/where-can-i-download-english-dictionary-database-in-a-text-fomat
-
+* http://coapp.org/reference/garrett-flavored-markdown.html

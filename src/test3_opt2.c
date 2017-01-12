@@ -6,18 +6,19 @@ Optimize 2
 
 */
 
-#include <stdio.h>
-#include <string.h>
-#include <stdint.h>
-#include "inline.h"
-#include "fnv1a.h"
+    #include <stdio.h>    // printf()
+    #include <stdint.h>   // uint32_t
 
-#define MAX_WORDS  80000
-#define MAX_STRING 255
+    #include "inline.h"   // INLINE
+    #include "fnv1a.h"    // fnva1_string()
 
-uint32_t gaWords[ MAX_WORDS ]; // 320,000 bytes
-size_t   gnWords = 0;
+    #define MAX_WORDS  80000
+    #define MAX_STRING 255
 
+    size_t   gnWords = 0;
+    uint32_t gaWords[ MAX_WORDS ]; // 320,000 bytes
+
+// ========================================================================
 void AddToList( char *word )
 {
     size_t i;
@@ -33,12 +34,11 @@ void AddToList( char *word )
     gaWords[ gnWords++ ] = hash;
 }
 
+// ========================================================================
 int main()
 {
     char line[ MAX_STRING+1 ];
-    FILE *data;
-
-    data = fopen( "words.txt", "r" );
+    FILE *data = fopen( "words.txt", "r" );
 
     while( !feof( data ) )
     {
@@ -46,7 +46,10 @@ int main()
         AddToList( line );
     }
 
-//  printf( "Allocated: %lu bytes\n", (unsigned long) sizeof( gaWords ) );
+    printf( "= Mem =\n" );
+    printf( "  File buffer: %lu\n", (unsigned long) sizeof( line ) );
+    printf( "  Hash buffer: %lu\n", (unsigned long)                  sizeof( gaWords ) );
+    printf( "  ===========: %lu\n", (unsigned long) sizeof( line ) + sizeof( gaWords ) );
     printf( "%ld unique lines\n", gnWords );
 
     return 0;
