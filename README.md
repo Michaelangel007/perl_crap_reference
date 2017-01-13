@@ -172,7 +172,7 @@ There are numerous optimizations that can be done:
 
 3. Compute a FNV1a hash on-the-fly
 
- 
+ Since FNV1a is so tiny, we can manually inline it:
 
  ```c
             hash = FNV1A_SEED;
