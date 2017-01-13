@@ -261,7 +261,10 @@ There are numerous optimizations that can be done:
     }
  ```
 
- We are finding a `needle` in a `haystack`. :)
+ We are finding a `needle` in a `haystack`. :-)
+
+ This also explains why _some_ coders like to put the array size _after_ the
+ array name, but I digress.
 
  If we are doing a binary search and then insert if not found,
  we can tweak the binary search to return the _negative position of middle._
