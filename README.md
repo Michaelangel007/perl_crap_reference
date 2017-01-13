@@ -318,6 +318,10 @@ There are numerous optimizations that can be done:
  ```c
     void demo()
     {
+        uint32_t hash;
+
+        hash = fnva1a_string( ... );
+
         found = find_key( hash );
         if( found < 0 )
             insert_key( hash, -found );
