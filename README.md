@@ -372,9 +372,7 @@ Each thread does this:
 In the _scatter_ phase each thread handles **local duplicates**.
 In the _gather_ phase we need to handle **global duplicates** across all threads.
 
-Once all threads are done we need to perform an N-way mergesort.
-
-Let's pretend we have 4 cores (or threads), and these are the hashes:
+Once all threads are done let's pretend we have 4 cores (or threads) and these are the hashes:
 
 |Core 0|Core 1|Core 2|Core 3|
 |:-----|:-----|:-----|:-----|
@@ -390,6 +388,8 @@ c
 d
 e
 ```
+
+One of the simpliest ways to  remove duplicates is to perform an N-way [merge sort](https://en.wikipedia.org/wiki/Merge_sort)
 
 We need to keep track of:
 
