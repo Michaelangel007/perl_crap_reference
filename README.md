@@ -427,23 +427,17 @@ Each thread does this:
 * Use binary search to see if the hash is in the dictionary
 * If not, insert it in sorted order
 
-If we were simply counting lines we would be Good-to-go (TM). But life is
+If we were simply counting lines we would be Good-To-Go (TM). But life is
 (almost usually) never that simple.
 
 The _snafu_ is that we are counting _unique_ lines.  That means we need
 to generate a hash for the _entire_ line. If a line straddles the boundary
 between two threads we need to adjust the end of the previous thread,
-and ajust he start of the next thread.
+and adjust he start of the next thread.
 
 Example:
 
 We have this file with 3 lines of text (12 bytes)
-
-```bash
-    echo -e -n "abcdef\ngh\ni\n" > 12.txt
-```
-
-Which looks like:
 
 ```
     abcdef
@@ -451,7 +445,13 @@ Which looks like:
     i
 ```
 
-Which is a linear stream of bytes:
+It can be generated like this:
+
+```bash
+    echo -e -n "abcdef\ngh\ni\n" > 12.txt
+```
+
+The file is just a linear stream of bytes:
 
 ```bash
     hexdump -C 12.txt
@@ -501,7 +501,7 @@ Each thread just does a simple loop:
 In the _scatter_ phase each thread handles **local duplicates**.
 In the _gather_ phase we need to handle **global duplicates** across all threads.
 
-Once all threads are done let's pretend we have 4 cores (or threads) and these are the hashes:
+Once all threads are done we need to count non-duplicates. Let's pretend we have 4 cores (or threads) and these are the hashes:
 
 |Core 0|Core 1|Core 2|Core 3|
 |:-----|:-----|:-----|:-----|
@@ -518,11 +518,11 @@ d
 e
 ```
 
-One of the simpliest ways to  remove duplicates is to perform an N-way [merge sort](https://en.wikipedia.org/wiki/Merge_sort)
+One of the simpliest ways to remove duplicates is to perform an N-way [merge sort](https://en.wikipedia.org/wiki/Merge_sort)
 
 We need to keep track of:
 
-* Current minimum value
+* The current minimum value, and
 * the `head` for each thread's array of hashes _in sorted order_ that should next be processed:
 
 Pseudo-code:
