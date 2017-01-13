@@ -168,40 +168,40 @@ There are numerous optimizations that can be done:
  The typical Binary Search is given with this algorithm:
 
  ```c
-int binarysearch(datatype t, datatype *x, size_t n)
-{
-	/* Lower and upper limits and middle test value */
-	int l, u, m;
+    int binarysearch(datatype t, datatype *x, size_t n)
+    {
+        /* Lower and upper limits and middle test value */
+        int l, u, m;
 
-	/* Initialize bounds */
-	l = 0;
-	u = n - 1;
-	
-	/* Are we done yet? */
-	while (l <= u)
-	{
-		/* Halve the range */
-		m = (l + u) / 2;
-		if (x[m] < t)
-		{
-			/* Move lower limit */
-			l = m + 1;
-		}
-		else if (x[m] == t)
-		{
-			/* A match - return its location */
-			return m;
-		}
-		else /* x[m] > t */
-		{
-			/* Move upper limit */
-			u = m - 1;
-		}
-	}
-	
-	/* Failure */
-	return -1
-}
+        /* Initialize bounds */
+        l = 0;
+        u = n - 1;
+        
+        /* Are we done yet? */
+        while (l <= u)
+        {
+            /* Halve the range */
+            m = (l + u) / 2;
+            if (x[m] < t)
+            {
+                /* Move lower limit */
+                l = m + 1;
+            }
+            else if (x[m] == t)
+            {
+                /* A match - return its location */
+                return m;
+            }
+            else /* x[m] > t */
+            {
+                /* Move upper limit */
+                u = m - 1;
+            }
+        }
+        
+        /* Failure */
+        return -1
+    }
  ```
 
  UGH.
