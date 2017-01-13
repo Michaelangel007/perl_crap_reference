@@ -191,7 +191,7 @@ Also the argument order should always be:
 Here is a cleaned up version:
 
 ```c
-    int BinarySearch( int size, uint32_t *data, uint32_t key )
+    int BinarySearch( int size, uint32_t *haystack, uint32_t needle )
 
         int min = 0;
         int mid = 0;
@@ -201,28 +201,81 @@ Here is a cleaned up version:
         {
             mid = (min + max) >> 1;
 
-            /**/ if( data[ mid ] == key )   return mid  ;
-            else if( data[ mid ] >  key )   max  = mid-1;
-            else /*              <  key )*/ min  = mid+1;
+            /**/ if( haystack[ mid ] == needle )   return mid  ;
+            else if( haystack[ mid ] >  needle )   max  = mid-1;
+            else /*                  <  needle )*/ min  = mid+1;
         }
 ```
 
-We can tweak that though to return the negative position of the last
-location checked which will allow us to use that as the _starting_  position
+If we are doing a binary search and then insert if not found,
+we can tweak the binary search return the _negative position of middle._
+This will allow us to use that as the _starting_  position
 of where the key should be inserted into the array.
 
-Even better we can _merge_ the two algorithms:
+```c
+// If the key is found , returns position > 0 where key was found
+// If the key not found, returns position < 0 of last best location for insert
+// ========================================================================
+int find_key( uint32_t key )
+{
+    int min = 0;
+    int mid = 0;
+    int max = gnWords - 1;
+
+    while( min <= max )
+    {
+        mid = (min + max) >> 1;
+
+        /**/ if( gaWords[ mid ] == key )   return mid+1; // normally return mid
+        else if( gaWords[ mid ] >  key )   max =  mid-1;
+        else /*                 <  key )*/ min =  mid+1;
+    }
+
+    return -(mid+1); // normally return false or -1
+}
+
+// ========================================================================
+void insert_key( uint32_t key, int pos )
+{
+    int mid = pos - 1;
+
+    while( (mid < gnWords) && (key > gaWords[ mid ]) )
+        mid++;
+
+    /* */ uint32_t *src = &gaWords[ mid ];
+    /* */ uint32_t *dst = src + 1;
+    const size_t    len = gnWords - mid;
+
+    memmove( dst, src, sizeof( uint32_t ) * len ); // memcpy() can't alias (overlap)
+
+    gaWords[ mid ] = key;
+    gnWords++;
+}
+```
+
+And it is used like this:
+
+```c
+void demo()
+{
+    found = find_key( hash );
+    if( found < 0 )
+        insert_key( hash, -found );
+}
+```
+
+Even better we can _merge_ the two algorithms ...
 
 * `FindKey()`
 * `InsertKey()`
 
-Into a combined version since there is common data.
+... into a combined version since there is common data.
 
 ```c
 // If the key is  found, returns position >= 0 where key was found
 // If the key not found, returns -1 but with key inserted
 // ========================================================================
-INLINE int find_key_insert( uint32_t key )
+int find_key_insert( uint32_t key )
 {
     int min = 0;
     int mid = 0;
