@@ -14,7 +14,7 @@ Because:
 
 # Backstory
 
-I was cleaning out my old computer books and came a Perl book.
+I was cleaning out my old computer books and came across a Perl book.
 In [Perl: The Complete Reference](https://www.amazon.com/Perl-Complete-Reference-Martin-Brown/dp/0072120002/),
 Chapter 19, _Perl Compiler_, Page 638, the author compares the speed of Perl with C.
 He gives various small examples:
@@ -87,7 +87,14 @@ Here is the author's "equivalent" C version:
 There are _numerous_ things wrong with the C version.
 How many **noob mistakes** can you spot?
 
-Here is the full list of everthing wrong:
+Take a minute.
+
+That _wasn't_ just a rhetorical question.
+One of the best ways to become a better code is to
+_find_ bugs in existing code that already has them.
+
+Once you're ready for the answers
+here is the full list of everthing wrong:
 
 * [src/test3_annotated.c](src/test3_annotated.c)
 
@@ -109,9 +116,10 @@ Table 19-8 has benchmark times showing that the Perl version is faster then the 
 First, where is the _data file_ to independently verify the timing???
 
 Second, except this an _apples-to-oranges_comparision_ -- **different algorithms** are used!
-Of course the Perl version is faster.  **No shit, Sherlock.** 
+Of course the Perl version is faster.
 Obviously, the _better algorithm_ in a slower language
 is going to "win" against the _worse algorithm_ in a faster language!
+**[No shit, Sherlock!](http://knowyourmeme.com/memes/no-shit-sherlock--2)** 
 
 The author gives the _excuse:_
 
