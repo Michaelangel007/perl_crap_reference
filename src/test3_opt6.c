@@ -242,6 +242,7 @@ int main( const int nArg, const char *aArg[] )
     {
         iMinCol = -1;
 
+        // Find minimum hash across all threads
         for( iThread = 0; iThread <  gnThreadsActive; ++iThread )
         {
             i = _anThreadHead[ iThread ];
@@ -267,6 +268,7 @@ int main( const int nArg, const char *aArg[] )
             }
         }
 
+        // Skip duplicate hashes NOT in the minimum column
         for( iThread = 0; iThread <  gnThreadsActive; ++iThread )
         {
             if( iMinCol != iThread )
@@ -278,7 +280,7 @@ int main( const int nArg, const char *aArg[] )
                 {
                     hash = gapThreadData[ iThread ][ i ];
 
-                    if( nMinVal == hash ) // remove duplicate if not in min col
+                    if( nMinVal == hash ) // skip duplicate if not in min col
                     {
                         _anThreadHead[ iThread ]++;
                         nLeft--;
@@ -287,6 +289,7 @@ int main( const int nArg, const char *aArg[] )
             }
         }
 
+        // Found a unique line, add it
         if( iMinCol >= 0)
         {
             _anThreadHead[ iMinCol ]++;
