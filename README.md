@@ -129,7 +129,7 @@ The author gives the _excuse:_
 1. _No one give a shit how many lines of code C is_ -- the **entire** point of using
   **C is for SPEED;** not some _bullshit metric!_
 
-Does that make [-2,000 Lines of Code](http://www.folklore.org/StoryView.py?project=Macintosh&story=Negative_2000_Lines_Of_Code.txt&sortOrder=Sort+by+Date&topic=Management) even better??
+ Does that make [-2,000 Lines of Code](http://www.folklore.org/StoryView.py?project=Macintosh&story=Negative_2000_Lines_Of_Code.txt&sortOrder=Sort+by+Date&topic=Management) even better??
 
 2. Apparently 34 lines of code is long??? Holy shit! Wait till the author finds
   out how this _toy example_ compares in the _Real World (TM)_ where there are
