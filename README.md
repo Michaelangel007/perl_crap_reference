@@ -556,10 +556,27 @@ This is just anecdotal evidence that confirms the adage:
 _You can have either _Fast_ or _Quick_, pick one._
 
 The advantage of writing the single-threaded version is that
-you can use that to write the multi-threaded version.
-Bugs found in one will help the other version and vice versa.
+you can use that as _momentum_ to write the multi-threaded version.
+Also, bugs found in one will help the other version and vice versa.
 
-_Use the right tool for the right job_
+For debugging the multi-threaded version you can comment out _one line_ -- the `pragma#` !
+
+```c
+//#pragma omp parallel for
+    for( iThread = 0; iThread < gnThreadsActive; ++iThread )
+```
+
+Take-away:
+
+_Use the right tool for the right job._
+
+If you care about:
+
+* _programmer time_, use a high level language
+* _run tie_, use 
+ * a better algorithm
+ * multi-thread it
+ * use a lower language
 
 
 # Data
