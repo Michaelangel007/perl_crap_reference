@@ -22,7 +22,7 @@ echo "Expected: "
  bin/test3opt5
  bin/test3opt6
 
-FILE=data/8.txt
+FILE=data/9.txt
 echo "File: ${FILE}"
 echo "Description: 8 lines with 1 extra blank line"
 echo "Expected: "
