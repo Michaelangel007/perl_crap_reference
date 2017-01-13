@@ -11,9 +11,9 @@ echo "Expected: "
  bin/test3opt5
  bin/test3opt6
 
-FILE=data/5blanks.txt
+FILE=data/5.txt
 echo "File: ${FILE}"
-echo "Description: 5 with extra blank lines"
+echo "Description: 4 + 1 blank line"
 echo "Expected: "
  sort -u ${FILE} | wc -l
  cp      ${FILE} words.txt
@@ -24,7 +24,7 @@ echo "Expected: "
 
 FILE=data/9.txt
 echo "File: ${FILE}"
-echo "Description: 8 lines with 1 extra blank line"
+echo "Description: 8 + 1 blank line"
 echo "Expected: "
  sort -u ${FILE} | wc -l
  cp      ${FILE} words.txt
@@ -35,7 +35,7 @@ echo "Expected: "
 
 FILE=data/2852.txt
 echo "File: ${FILE}"
-echo "Description: Sherlock Homes"
+echo "Description: Sherlock Holmes"
 echo "Expected:"
  sort -u ${FILE} | wc -l
  cp      ${FILE} words.txt
