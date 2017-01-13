@@ -746,7 +746,7 @@ wget -O 2852.txt http://www.gutenberg.org/files/2852/2852-0.txt
 * http://coapp.org/reference/garrett-flavored-markdown.html
 
 
-# Thanks
+# Special Thanks
 
 * Chris for proofreading
 
