@@ -101,7 +101,7 @@ in [src/test3_annotated.c](src/test3_annotated.c)
 The 3 biggest problems are:
 
 * The bloody thing doens't even compile !
-* Has an off-by-one bug!
+* Has an off-by-one bug! Did the author _even test it??_
 * Not scalable
 
 # Apples to Oranges
@@ -115,7 +115,7 @@ Table 19-8 has benchmark times showing that the Perl version is faster then the 
 
 First, where is the _data file_ to independently verify the timing???
 
-Second, except this an _apples-to-oranges-comparision_ -- **different algorithms** are used!
+Second, except this an _apples-to-oranges-comparison_ -- **different algorithms** are used!
 Of course the Perl version is faster.
 Obviously, the _better algorithm_ in a slower language
 is going to "win" against the _worse algorithm_ in a faster language!
