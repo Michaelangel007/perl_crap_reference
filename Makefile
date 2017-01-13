@@ -1,7 +1,7 @@
-all: bin bin/test3fix bin/test3opt1 bin/test3opt2 bin/test3opt3 bin/test3opt4 bin/test3opt5 bin/test3opt6
+all: bin bin/test3fix bin/test3opt1 bin/test3opt2 bin/test3opt3 bin/test3opt4 bin/test3opt5 bin/test3opt6 bin/lc
 
 clean:
-	rm bin/test3fix bin/test3opt1 bin/test3opt2 bin/test3opt3 bin/test3opt4 bin/test3opt5 bin/test3opt6
+	rm bin/test3fix bin/test3opt1 bin/test3opt2 bin/test3opt3 bin/test3opt4 bin/test3opt5 bin/test3opt6 bin/lc
 
 CC=gcc
 
@@ -34,5 +34,8 @@ bin/test3opt5: src/test3_opt5.c $(H_INC)
 	$(CC) $(CFLAGS) $< -o $@
 
 bin/test3opt6: src/test3_opt6.c $(H_INC)
+	$(CC) $(CFLAGS) $(LIB_OMP) $< -o $@
+
+bin/lc: src/linecount.c $(H_INC)
 	$(CC) $(CFLAGS) $(LIB_OMP) $< -o $@
 
