@@ -170,7 +170,7 @@ There are numerous optimizations that can be done:
     }
  ```
 
-3. Compute a FNV1a hash on-the-fly
+3. Inline the hash generation
 
  Since FNV1a is so tiny, we can manually inline it:
 
@@ -180,7 +180,7 @@ There are numerous optimizations that can be done:
                 hash = (*p++ ^ hash) * FNV1A_PRIME;
  ```
 
-4. Replace _Linear_ search with a _Binary Seach_
+4. Replace the slow _Linear_ string search with a fast _Binary Seach_
 
 
  # Typical crappy Binary Search vs a Clean one
