@@ -614,6 +614,10 @@ wget -O 2852.txt http://www.gutenberg.org/files/2852/2852-0.txt
 * http://stackoverflow.com/questions/6441975/where-can-i-download-english-dictionary-database-in-a-text-fomat
 * http://coapp.org/reference/garrett-flavored-markdown.html
 
+--
+
+Friday, January 13, 2017
+
 Michael "Code Poet" Pohoreski, aka Michaelangel007
 _"I have no keyboard, and I must code."_
 
