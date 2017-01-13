@@ -93,7 +93,7 @@ That _wasn't_ just a rhetorical question.
 One of the best ways to become a better code is to
 _find_ bugs in existing code that already has them.
 
-Once you're ready for allthe answers here is the full list of everything wrong
+Once you're ready for all the answers here is the full list of everything wrong
 in [src/test3_annotated.c](src/test3_annotated.c)
 
 * https://github.com/Michaelangel007/perl_crap_reference/blob/master/src/test3_annotated.c
@@ -115,7 +115,7 @@ Table 19-8 has benchmark times showing that the Perl version is faster then the 
 
 First, where is the _data file_ to independently verify the timing???
 
-Second, except this an _apples-to-oranges_comparision_ -- **different algorithms** are used!
+Second, except this an _apples-to-oranges-comparision_ -- **different algorithms** are used!
 Of course the Perl version is faster.
 Obviously, the _better algorithm_ in a slower language
 is going to "win" against the _worse algorithm_ in a faster language!
