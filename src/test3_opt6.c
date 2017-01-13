@@ -78,12 +78,6 @@ INLINE void find_key_insert( const int iThread,  uint32_t key )
 int main( const int nArg, const char *aArg[] )
 {
     const char *filename = "words.txt";
-    struct stat info;
-
-    FILE  *data = fopen( filename, "rb" );
-    size_t size = stat( filename, &info ) ? 0 : (size_t) info.st_size;
-
-    unsigned char *buf = (unsigned char*) malloc( size+2 );
 
 // BEGIN OMP
     int iThread;
@@ -102,13 +96,14 @@ int main( const int nArg, const char *aArg[] )
     {
         while( iArg < nArg )
         {
-            char *pArg = (char*) aArg[ iArg + 1 ];
+            iArg++;
+
+            char *pArg = (char*) aArg[ iArg ];
             if(  !pArg )
                 break;
 
             if( pArg[0] == '-' )
             {
-                iArg++;
                 pArg++; // point to 1st char in option
 
                 if( *pArg == 'j' )
@@ -118,8 +113,8 @@ int main( const int nArg, const char *aArg[] )
                         gnThreadsActive = i;
                 }
             }
-
-            iArg++;
+            else
+                filename = aArg[ iArg ];
         }
     }
 
@@ -130,6 +125,13 @@ int main( const int nArg, const char *aArg[] )
     printf( "Using: %d / %d cores\n", gnThreadsActive, gnThreadsMaximum );
 
 // END OMP
+
+    struct stat info;
+
+    FILE  *data = fopen( filename, "rb" );
+    size_t size = stat( filename, &info ) ? 0 : (size_t) info.st_size;
+
+    unsigned char *buf = (unsigned char*) malloc( size+2 );
 
     if( !data )
         return printf( "ERROR: Couldn't open input file: %s\n", filename );

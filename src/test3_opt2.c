@@ -36,10 +36,14 @@ void AddToList( char *word )
 }
 
 // ========================================================================
-int main()
+int main( const int nArg, const char *aArg[] )
 {
+    const char *filename = "words.txt";
+    if( nArg > 0 )
+        filename = aArg[1];
+
     char line[ MAX_STRING+1 ];
-    FILE *data = fopen( "words.txt", "r" );
+    FILE *data = fopen( filename, "r" );
 
     if( data )
     {

@@ -60,9 +60,12 @@ INLINE int find_key_insert( uint32_t key )
 }
 
 // ========================================================================
-int main()
+int main( const int nArg, const char *aArg[] )
 {
     const char *filename = "words.txt";
+    if( nArg > 0 )
+        filename = aArg[1];
+
     struct stat info;
 
     FILE  *data = fopen( filename, "rb" );
