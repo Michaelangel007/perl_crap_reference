@@ -267,6 +267,31 @@ There are numerous optimizations that can be done:
  This also explains why _some_ coders like to put the array size _after_ the
  array name, but I digress.
 
+ For performance reasons we need to consider the _common case_.
+ The majority of the time we _won't_ be on the key we are looking at.
+ Modern CPU's have _branch prediction_ -- by placing the common cases first
+ we can leverage this.
+
+ Ergo,
+
+ ```c
+    int BinarySearch( uint32_t needle, int size, uint32_t *haystack )
+    {
+        int min = 0;
+        int mid = 0;
+        int max = size-1;
+
+        while( min <= max )
+        {
+            mid = (min + max) >> 1;
+
+            /**/ if( haystack[ mid ] <  needle )   min  = mid+1;
+            else if( haystack[ mid ] >  needle )   max  = mid-1;
+            else /*( haystack[ mid ] == needle )*/ return mid  ;
+        }
+    }
+ ```
+
  Looking at the what the code is doing from a higher perspective
  if we are doing a _binary search followed by an insert if not found_
  then we can tweak the binary search to return the _negative position of middle._
