@@ -20,7 +20,7 @@ Optimize 3
     const uint32_t FNV1A_PRIME = 0x01000193; //   16777619
     const uint32_t FNV1A_SEED  = 0x811C9DC5; // 2166136261
 
-    #define SPC 0x20
+    #define LF  0x0A
 
     #define MAX_WORDS  80000
 
@@ -68,13 +68,14 @@ int main()
         do
         {
             hash = FNV1A_SEED;
-            while( *p > SPC )
-                hash =  (*p++ ^ hash) * FNV1A_PRIME;
+            while( *p != LF )
+                hash = (*p++ ^ hash) * FNV1A_PRIME;
 
             if( !find_key( hash ) )
                 add_key( hash );
 
-            p++; // skip LF = 0x0A
+            while( *p == LF )
+                p++;
         } while( *p );
     }
 

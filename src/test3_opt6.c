@@ -138,7 +138,8 @@ int main( const int nArg, const char *aArg[] )
         return printf( "ERROR: Couldn't allocate memory for file\n" );
 
     fread( buf, size, 1, data );
-    buf[ size ] = 0;
+    buf[ size+0 ] = LF;
+    buf[ size+1 ] = 0;
 
     fclose( data );
 
@@ -157,28 +158,23 @@ int main( const int nArg, const char *aArg[] )
     memset( ganOffsetBeg, 0, sizeof( ganOffsetBeg ) );
     memset( ganOffsetEnd, 0, sizeof( ganOffsetEnd ) );
 
+    end = 0;
     for( iThread = 0; iThread < gnThreadsActive; iThread++ )
     {
-        beg = (iThread + 0) * nThreadDataElem;
-        end = (iThread + 1) * nThreadDataElem - 1;
+        beg = end;
+        end = beg + nThreadDataElem - 1;
+
+        if( beg > size) beg = size;
+        if( end > size) end = size-1;
 
         gapThreadData[ iThread ] = (uint32_t*) malloc( nThreadDataSize );
         ganThreadWord[ iThread ] = 0;
 
-        if( iThread > 0 )
-        {
-            // Adjust start to previous LF
-            while( buf[ beg ] != LF )
-                --beg;
-
-            // Adjust previous end to this start
-            ganOffsetEnd[ iThread-1 ] = beg;
-            beg++;
-        }
-
         // Adjust end to next LF
         while( buf[ end ] != LF ) // TODO: check for buffer overflow?
             end++;
+
+        end++;
 
         if( !ganOffsetBeg[ iThread ] ) ganOffsetBeg[ iThread ] = beg;
         if( !ganOffsetEnd[ iThread ] ) ganOffsetEnd[ iThread ] = end;
@@ -209,12 +205,12 @@ int main( const int nArg, const char *aArg[] )
         {
             hash = FNV1A_SEED;
 
-            while( buf[ b ] > SPC )
+            while( buf[ b ] != LF ) // MSDOG: 0xD 0xA
                 hash = (buf[ b++ ] ^ hash) * FNV1A_PRIME;
 
             find_key_insert( id, hash );
 
-            while( buf[ b ] <= SPC ) // skip CR, LF
+            while( buf[ b ] == LF )
                 b++;
         } while( b < e );
     }
