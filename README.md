@@ -299,8 +299,8 @@ There are numerous optimizations that can be done:
 
  Even better we can _merge_ the two algorithms ...
 
-   * `FindKey()`
-   * `InsertKey()`
+  * `FindKey()`
+  * `InsertKey()`
 
  ... into a combined version since there is common data.
 
