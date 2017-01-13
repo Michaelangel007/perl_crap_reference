@@ -651,13 +651,13 @@ here are the `test3` metrics:
 |`test3opt4`    |Binary search           | 0.181s |        934,671 |
 |`test3opt5`    |Merged BinSearchInsKey  | 0.179s |        934,671 |
 |`test3opt6 -j1`|OpenMP 1 thread         | 0.182s |      3,073,350 |
-|`test3opt6 -j1`|OpenMP 2 threads        | 0.045s |      3,073,350 |
-|`test3opt6 -j1`|OpenMP 3 threads        | 0.024s |      3,073,350 |
-|`test3opt6 -j1`|OpenMP 4 threads        | 0.017s |      3,073,342 |
-|`test3opt6 -j1`|OpenMP 5 threads        | 0.013s |      3,073,350 |
-|`test3opt6 -j1`|OpenMP 6 threads        | 0.010s |      3,073,350 |
-|`test3opt6 -j1`|OpenMP 7 threads        | 0.010s |      3,073,350 |
-|`test3opt6 -j1`|OpenMP 7 threads        | 0.009s |      3,073,326 |
+|`test3opt6 -j2`|OpenMP 2 threads        | 0.045s |      3,073,350 |
+|`test3opt6 -j3`|OpenMP 3 threads        | 0.024s |      3,073,350 |
+|`test3opt6 -j4`|OpenMP 4 threads        | 0.017s |      3,073,342 |
+|`test3opt6 -j5`|OpenMP 5 threads        | 0.013s |      3,073,350 |
+|`test3opt6 -j6`|OpenMP 6 threads        | 0.010s |      3,073,350 |
+|`test3opt6 -j7`|OpenMP 7 threads        | 0.010s |      3,073,350 |
+|`test3opt6 -j8`|OpenMP 8 threads        | 0.009s |      3,073,326 |
 
 The hashing proves that this program is CPU bound -- the majority
 of time is checking to see if an word is unique; that is,
