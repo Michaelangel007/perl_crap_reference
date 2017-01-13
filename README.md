@@ -246,43 +246,43 @@ There are numerous optimizations that can be done:
  of where the key should be inserted into the array.
 
  ```c
-// If the key is found , returns position > 0 where key was found
-// If the key not found, returns position < 0 of last best location for insert
-// ========================================================================
-int find_key( uint32_t key )
-{
-    int min = 0;
-    int mid = 0;
-    int max = gnWords - 1;
-
-    while( min <= max )
+    // If the key is found , returns position > 0 where key was found
+    // If the key not found, returns position < 0 of last best location for insert
+    // ========================================================================
+    int find_key( uint32_t key )
     {
-        mid = (min + max) >> 1;
+        int min = 0;
+        int mid = 0;
+        int max = gnWords - 1;
 
-        /**/ if( gaWords[ mid ] == key )   return mid+1; // normally return mid
-        else if( gaWords[ mid ] >  key )   max =  mid-1;
-        else /*                 <  key )*/ min =  mid+1;
+        while( min <= max )
+        {
+            mid = (min + max) >> 1;
+
+            /**/ if( gaWords[ mid ] == key )   return mid+1; // normally return mid
+            else if( gaWords[ mid ] >  key )   max =  mid-1;
+            else /*                 <  key )*/ min =  mid+1;
+        }
+
+        return -(mid+1); // normally return false or -1
     }
 
-    return -(mid+1); // normally return false or -1
-}
+    // ========================================================================
+    void insert_key( uint32_t key, int pos )
+    {
+        int mid = pos - 1;
 
-// ========================================================================
-void insert_key( uint32_t key, int pos )
-{
-    int mid = pos - 1;
+        while( (mid < gnWords) && (key > gaWords[ mid ]) )
+            mid++;
 
-    while( (mid < gnWords) && (key > gaWords[ mid ]) )
-        mid++;
+        /* */ uint32_t *src = &gaWords[ mid ];
+        /* */ uint32_t *dst = src + 1;
+        const size_t    len = gnWords - mid;
 
-    /* */ uint32_t *src = &gaWords[ mid ];
-    /* */ uint32_t *dst = src + 1;
-    const size_t    len = gnWords - mid;
+        memmove( dst, src, sizeof( uint32_t ) * len ); // memcpy() can't alias (overlap)
 
-    memmove( dst, src, sizeof( uint32_t ) * len ); // memcpy() can't alias (overlap)
-
-    gaWords[ mid ] = key;
-    gnWords++;
+        gaWords[ mid ] = key;
+        gnWords++;
 }
  ```
 
@@ -305,37 +305,37 @@ void insert_key( uint32_t key, int pos )
  ... into a combined version since there is common data.
 
  ```c
-// If the key is  found, returns position >= 0 where key was found
-// If the key not found, returns -1 but with key inserted
-// ========================================================================
-int find_key_insert( uint32_t key )
-{
-    int min = 0;
-    int mid = 0;
-    int max = gnWords - 1;
-
-    while( min <= max )
+    // If the key is  found, returns position >= 0 where key was found
+    // If the key not found, returns -1 but with key inserted
+    // ========================================================================
+    int find_key_insert( uint32_t key )
     {
-        mid = (min + max) >> 1;
+        int min = 0;
+        int mid = 0;
+        int max = gnWords - 1;
 
-        /**/ if( gaWords[ mid ] == key )   return mid  ;
-        else if( gaWords[ mid ] >  key )   max  = mid-1;
-        else /*                 <  key )*/ min  = mid+1;
+        while( min <= max )
+        {
+            mid = (min + max) >> 1;
+
+            /**/ if( gaWords[ mid ] == key )   return mid  ;
+            else if( gaWords[ mid ] >  key )   max  = mid-1;
+            else /*                 <  key )*/ min  = mid+1;
+        }
+
+        while( (mid < gnWords) && (key > gaWords[ mid ]) )
+            mid++;
+
+        /* */ uint32_t *src = &gaWords[ mid ];
+        /* */ uint32_t *dst = src + 1;
+        const size_t    len = gnWords - mid;
+
+        memmove( dst, src, sizeof( uint32_t ) * len ); // memcpy() can't alias (overlap)
+        gaWords[ mid ] = key;
+        gnWords++;
+
+        return -1;
     }
-
-    while( (mid < gnWords) && (key > gaWords[ mid ]) )
-        mid++;
-
-    /* */ uint32_t *src = &gaWords[ mid ];
-    /* */ uint32_t *dst = src + 1;
-    const size_t    len = gnWords - mid;
-
-    memmove( dst, src, sizeof( uint32_t ) * len ); // memcpy() can't alias (overlap)
-    gaWords[ mid ] = key;
-    gnWords++;
-
-    return -1;
-}
  ```
 
  The full optimized single-threaded version is:
