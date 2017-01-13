@@ -93,10 +93,10 @@ That _wasn't_ just a rhetorical question.
 One of the best ways to become a better code is to
 _find_ bugs in existing code that already has them.
 
-Once you're ready for the answers
-here is the full list of everything wrong:
+Once you're ready for allthe answers here is the full list of everything wrong
+in [src/test3_annotated.c](src/test3_annotated.c)
 
-* [src/test3_annotated.c](src/test3_annotated.c)
+* https://github.com/Michaelangel007/perl_crap_reference/blob/master/src/test3_annotated.c
 
 The 3 biggest problems are:
 
@@ -123,13 +123,15 @@ is going to "win" against the _worse algorithm_ in a faster language!
 
 The author gives the _excuse:_
 
-   We could have used a binary tree or even a hashing system,
-   but that would have added significantly more liens to an already long C program.
+> We could have used a binary tree or even a hashing system,
+> but that would have added significantly more liens to an already long C program.
 
 1. _No one give a shit how many lines of code C is_ -- the **entire** point of using
   **C is for SPEED;** not some _bullshit metric!_
 
- Does that make [-2,000 Lines of Code](http://www.folklore.org/StoryView.py?project=Macintosh&story=Negative_2000_Lines_Of_Code.txt&sortOrder=Sort+by+Date&topic=Management) even better??
+ Does that make _-2,000 Lines of Code_ even better?!
+
+ * http://www.folklore.org/StoryView.py?project=Macintosh&story=Negative_2000_Lines_Of_Code.txt&sortOrder=Sort+by+Date&topic=Management
 
 2. Apparently 34 lines of code is long??? Holy shit! Wait till the author finds
   out how this _toy example_ compares in the _Real World (TM)_ where there are
@@ -138,7 +140,6 @@ The author gives the _excuse:_
   Apparently including an additional 38 lines for a total of 72 lines was too much work !
 
 /sarcasm _"Hey, that would have been twice the work, right?"_
-
 
 
 # Optimizations
