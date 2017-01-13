@@ -226,13 +226,14 @@ There are numerous optimizations that can be done:
 
  UGH.
 
- Notice the crappy variable names:
+ Notice the crappy code style and variable names:
 
-  * `x` which means `data`
-  * the lowercase L, `l`, is horrible to read in some fonts, instead of `lo`
-  * `u` is OK, but better would be `hi`
+  * What we are searching for is called the badly named and non-descript `t` instead of a good name like `key`
+  * the badly named `x` which means `data`
+  * the lowercase L, `l`, is _horrible to read_ in some fonts due to one `1` looking almost identical, instead of `lo`
   * `m` is ambigious; does it mean minimum? median? maximum?
-  * What we are searching for is called the badly named non-descript `t` instead of a good name like `key`
+  * `u` is OK, but better would be `hi`
+  * Useless, redundant comments
 
  Also the argument order should always be in a consistent fashion:
 
