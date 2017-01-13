@@ -2,6 +2,8 @@
 
 A.K.A _Binary Search Revisited_
 
+# Overview
+
 Why would someone take the time to write binary search in this day and age?
 
 Because:
@@ -9,6 +11,8 @@ Because:
 1. The only way to remain a good programmer is to constantly practice the basics, and
 2. It is trivial to write. See [Typical crappy Binary Search vs a Clean one
 ](#typical-crappy-binary-search-vs-a-clean-one) but we're getting ahead of ourselves.
+
+# Backstory
 
 I was cleaning out my old computer books and came a Perl book.
 In [Perl: The Complete Reference](https://www.amazon.com/Perl-Complete-Reference-Martin-Brown/dp/0072120002/),
