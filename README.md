@@ -266,8 +266,9 @@ There are numerous optimizations that can be done:
  This also explains why _some_ coders like to put the array size _after_ the
  array name, but I digress.
 
- If we are doing a binary search and then insert if not found,
- we can tweak the binary search to return the _negative position of middle._
+ Looking at the what the code is doing from a higher perspective
+ if we are doing a _binary search followed by an insert if not found_
+ then we can tweak the binary search to return the _negative position of middle._
  This will allow us to use that as the _starting_  position
  of where the key should be inserted into the array.
 
