@@ -147,17 +147,37 @@ The author gives the _excuse:_
 There are numerous optimizations that can be done:
 
 1. Read the entire file into memory at once bypassing the C library buffering.
-2. Replace the dog slow string comparision with a hash compare, [FNV1a](https://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function)
-3. Compute a FNV1a hash on-the-fly
+2. Replace the dog slow string comparision with a hash compare such as [FNV1a](https://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function)
 
  ```cpp
     const uint32_t FNV1A_PRIME = 0x01000193; //   16777619
     const uint32_t FNV1A_SEED  = 0x811C9DC5; // 2166136261
 
-    inline uint32_t fnv1a( unsigned char byte, uint32_t hash = FNV1A_SEED )
+    inline uint32_t fnv1a_byte( unsigned char byte, uint32_t hash = FNV1A_SEED )
     {
           return (byte ^ hash) * FNV1A_PRIME;
     }
+
+    inline uint32_t fnv1a_string( char *text )
+    {
+        uint32_t       hash = FNV1A_SEED;
+        unsigned char *p    = (unsigned char *)text;
+
+        while( *p )
+            hash = fnv1a_byte( *p++, hash );
+
+        return hash;
+    }
+ ```
+
+3. Compute a FNV1a hash on-the-fly
+
+ 
+
+ ```c
+            hash = FNV1A_SEED;
+            while( *p != LF )
+                hash = (*p++ ^ hash) * FNV1A_PRIME;
  ```
 
 4. Replace _Linear_ search with a _Binary Seach_
