@@ -239,6 +239,8 @@ There are numerous optimizations that can be done:
   * Array Size
   * Array Pointer
 
+ # Code Poet: Binary Search
+
  Here is a cleaned up version with _good_ variable names:
 
  ```c
@@ -254,7 +256,7 @@ There are numerous optimizations that can be done:
 
             /**/ if( haystack[ mid ] == needle )   return mid  ;
             else if( haystack[ mid ] >  needle )   max  = mid-1;
-            else /*                  <  needle )*/ min  = mid+1;
+            else /*  haystack[ mid ] <  needle )*/ min  = mid+1;
         }
     }
  ```
