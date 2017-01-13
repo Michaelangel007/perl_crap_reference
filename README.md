@@ -640,7 +640,7 @@ See [test3 opt6.c](src/test3_opt6.c)
 # Benchmarks
 
 Using a dictinary of 79,339 words from [data/words.txt](data/words.txt)
-Here are the `test3` metrics:
+here are the `test3` metrics:
 
 |Command        |Description             | Time   | Memory (bytes) |
 |:--------------|:-----------------------|-------:|---------------:|
@@ -663,7 +663,8 @@ The hashing proves that this program is CPU bound -- the majority
 of time is checking to see if an word is unique; that is,
 does this word exist in the unique word list? If not, add it.
 
-While the single threaded optimized C version is half as slow,
+While the single threaded optimized C version is half as slow
+as the Perl reference version
 it only uses 7.0% of the memory of the bloated Perl version.
 
 The multithreaded optimized C version screams at ~ 0.010s!
