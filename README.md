@@ -124,7 +124,7 @@ is going to "win" against the _worse algorithm_ in a faster language!
 The author gives the _excuse:_
 
 > We could have used a binary tree or even a hashing system,
-> but that would have added significantly more liens to an already long C program.
+> but that would have added significantly more lines to an already long C program.
 
 1. _No one give a shit how many lines of code C is_ -- the **entire** point of using
   **C is for SPEED;** not some _bullshit metric!_
@@ -133,9 +133,9 @@ The author gives the _excuse:_
 
  * http://www.folklore.org/StoryView.py?project=Macintosh&story=Negative_2000_Lines_Of_Code.txt&sortOrder=Sort+by+Date&topic=Management
 
-2. Apparently 34 lines of code is long??? Holy shit! Wait till the author finds
+2. Apparently 34 lines of code is long?!?!?! Wait till the author finds
   out how this _toy example_ compares in the _Real World (TM)_ where there are
-  _hundreds of thousands of lines of code in a project._
+  _hundreds of thousands of lines of code in a project!_
 
   Apparently including an additional 38 lines for a total of 72 lines was too much work !
 
