@@ -119,7 +119,7 @@ Second, except this an _apples-to-oranges_comparision_ -- **different algorithms
 Of course the Perl version is faster.
 Obviously, the _better algorithm_ in a slower language
 is going to "win" against the _worse algorithm_ in a faster language!
-**[No shit, Sherlock!](http://knowyourmeme.com/memes/no-shit-sherlock--2)** 
+**[No shit, Sherlock!](http://knowyourmeme.com/memes/no-shit-sherlock--2)**
 
 The author gives the _excuse:_
 
@@ -176,7 +176,7 @@ There are numerous optimizations that can be done:
         /* Initialize bounds */
         l = 0;
         u = n - 1;
-        
+
         /* Are we done yet? */
         while (l <= u)
         {
@@ -198,7 +198,7 @@ There are numerous optimizations that can be done:
                 u = m - 1;
             }
         }
-        
+
         /* Failure */
         return -1
     }
@@ -369,6 +369,74 @@ Each thread does this:
 * Use binary search to see if the hash is in the dictionary
 * If not, insert it in sorted order
 
+If we were simply counting lines we would be Good-to-go (TM). But life is
+(almost usually) never that simple.
+
+The _snafu_ is that we are counting _unique_ lines.  That means we need
+to generate a hash for the _entire_ line. If a line straddles the boundary
+between two threads we need to adjust the end of the previous thread,
+and ajust he start of the next thread.
+
+Example:
+
+We have this file with 3 lines of text (12 bytes)
+
+```bash
+    echo -e -n "abcdef\ngh\ni\n" > 12.txt
+```
+
+Which looks like:
+
+```
+    abcdef
+    gh
+    i
+```
+
+Which is a linear stream of bytes:
+
+```bash
+    hexdump -C 12.txt
+
+    00000000  61 62 63 64 65 66 0a 67  68 0a 69 0a              |abcdef.gh.i.|
+    0000000c
+```
+
+Splitting the work up amongst 3 threads means each thread gets 12/3 = 4 bytes of data
+allocated to it:
+
+
+```
+    abcdef$gh$i$
+    \__/\__/\--/
+     0   1   2
+```
+
+We need to move the "end" of thread 0 and the start of thread 1:
+
+```
+    abcdef$gh$i$
+    \____/\/\--/
+     0     1 2
+```
+
+Similarly, we need to adjust end of 1 and start of 2:
+
+```
+    abcdef$gh$i$
+    \____/\__/\/
+     0     1   2
+```
+
+Each thread just does a simple loop:
+
+```c
+    while( beg < end )
+    {
+        hash = fnv1a_string( line )
+        find_insert( line )
+    }
+```
 
 # Gather
 
@@ -419,7 +487,7 @@ Pseudo-code:
                 else
                     if minimum hash > thread's head hash
                         minimum hash = thread's head has
-                        minimum column = current thread id                     
+                        minimum column = current thread id
 
         // Skip duplicate hashes NOT in the minimum column
         For each thread id
@@ -576,7 +644,7 @@ _Use the right tool for the right job._
 If you care about:
 
 * _programmer time_, use a high level language
-* _run time_, use 
+* _run time_, use
  * a better algorithm
  * multi-thread it
  * use a lower language
