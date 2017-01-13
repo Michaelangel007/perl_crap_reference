@@ -640,7 +640,7 @@ See [test3 opt6.c](src/test3_opt6.c)
 # Benchmarks
 
 Using a dictinary of 79,339 words from [data/words.txt](data/words.txt)
-here are the `test3` metrics:
+here are the `test3` metrics from 2.8 GHz i7 MacBook Pro (Mid 2014):
 
 |Command        |Description             | Time   | Memory (bytes) |
 |:--------------|:-----------------------|-------:|---------------:|
@@ -660,8 +660,10 @@ here are the `test3` metrics:
 |`test3opt6 -j8`|OpenMP 8 threads        | 0.009s |      3,073,326 |
 
 The hashing proves that this program is CPU bound -- the majority
-of time is checking to see if an word is unique; that is,
-does this word exist in the unique word list? If not, add it.
+of time is checking to see:
+
+ * Is a word is unique; that is, does this word exist in the unique word list?
+ * If not, add it.
 
 While the single threaded optimized C version is half as slow
 as the Perl reference version
