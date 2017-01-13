@@ -567,14 +567,14 @@ For debugging the multi-threaded version you can comment out _one line_ -- the `
     for( iThread = 0; iThread < gnThreadsActive; ++iThread )
 ```
 
-Take-away:
+Take-aways:
 
 _Use the right tool for the right job._
 
 If you care about:
 
 * _programmer time_, use a high level language
-* _run tie_, use 
+* _run time_, use 
  * a better algorithm
  * multi-thread it
  * use a lower language
