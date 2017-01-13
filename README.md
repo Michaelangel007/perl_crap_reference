@@ -133,11 +133,12 @@ The author gives the _excuse:_
 
  * http://www.folklore.org/StoryView.py?project=Macintosh&story=Negative_2000_Lines_Of_Code.txt&sortOrder=Sort+by+Date&topic=Management
 
-2. Apparently 34 lines of code is long?!?!?! Wait till the author finds
-  out how this _toy example_ compares in the _Real World (TM)_ where there are
-  _hundreds of thousands of lines of code in a project!_
+2. Apparently 34 lines of code is long?!?!
 
-  Apparently including an additional 38 lines for a total of 72 lines was too much work !
+  a) Wait till the author finds out how this _toy example_ compares in the _Real World (TM)_
+  where there are _hundreds of thousands of lines of code in a project!_
+
+  b) Really?! The book is 1179 pages; apparently including an additional 38 lines for a total of 72 lines was too much work !
 
 /sarcasm _"Hey, that would have been twice the work, right?"_
 
@@ -667,7 +668,7 @@ it only uses 7.0% of the memory of the bloated Perl version.
 
 The multithreaded optimized C version screams at ~ 0.010s!
 It also only uses 23% of the memory compared to the Perl version.
-Not for for ~300 lines of code !
+Not bad for ~300 lines of code !
 
 # TL:DR; Take-aways
 
