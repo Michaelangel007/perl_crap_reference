@@ -685,7 +685,7 @@ Reviewing the performance and time required to write these programs:
 
 This is just anecdotal evidence that confirms the adage:
 
-_You can have either _Fast_ or _Quick_, pick one._
+You can have either _Fast or Cheap_, pick **one.**
 
 The advantage of writing the single-threaded version is that
 you can use that as _momentum_ to write the multi-threaded version.
