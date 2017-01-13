@@ -40,12 +40,12 @@ INLINE int find_key( uint32_t key )
     {
         mid = (min + max) >> 1;
 
-        /**/ if( gaWords[ mid ] == key )   return mid+1; // Normal BinSearch returns true
+        /**/ if( gaWords[ mid ] == key )   return mid+1; // Normally returns true or position
         else if( gaWords[ mid ] >  key )   max =  mid-1;
         else /*                 <  key )*/ min =  mid+1;
     }
 
-    return -(mid+1);
+    return -(mid+1); // Normally returns false or -1
 }
 
 // ========================================================================
