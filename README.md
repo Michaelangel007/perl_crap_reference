@@ -94,7 +94,7 @@ One of the best ways to become a better code is to
 _find_ bugs in existing code that already has them.
 
 Once you're ready for the answers
-here is the full list of everthing wrong:
+here is the full list of everything wrong:
 
 * [src/test3_annotated.c](src/test3_annotated.c)
 
@@ -162,11 +162,11 @@ There are numerous optimizations that can be done:
 4. Replace _Linear_ search with a _Binary Seach_
 
 
-# Typical crappy Binary Search vs a Clean one
+ # Typical crappy Binary Search vs a Clean one
 
-The typical Binary Search is given with this algorithm:
+ The typical Binary Search is given with this algorithm:
 
-```c
+ ```c
 int binarysearch(datatype t, datatype *x, size_t n)
 {
 	/* Lower and upper limits and middle test value */
@@ -201,24 +201,27 @@ int binarysearch(datatype t, datatype *x, size_t n)
 	/* Failure */
 	return -1
 }
-```
+ ```
 
-Notice the crappy variable names:
+ UGH.
 
-* `x` which means `data`
-* the lowercase L, `l`, is horrible to read in some fonts
-* `m` is ambigious; does it mean minimum? median? maximum?
-* The key is called the badly named non-descript `t` instead of a good name like `key`
+ Notice the crappy variable names:
 
-Also the argument order should always be:
+  * `x` which means `data`
+  * the lowercase L, `l`, is horrible to read in some fonts, instead of `lo`
+  * `u` is OK, but better would be `hi`
+  * `m` is ambigious; does it mean minimum? median? maximum?
+  * What we are searching for is called the badly named non-descript `t` instead of a good name like `key`
 
-* Array Size
-* Array Pointer
+ Also the argument order should always be in a consistent fashion:
 
-Here is a cleaned up version with _good_ variable names:
+  * Array Size
+  * Array Pointer
 
-```c
-    int BinarySearch( int size, uint32_t *haystack, uint32_t needle )
+ Here is a cleaned up version with _good_ variable names:
+
+ ```c
+    int BinarySearch( uint32_t needle, int size, uint32_t *haystack )
 
         int min = 0;
         int mid = 0;
@@ -232,14 +235,16 @@ Here is a cleaned up version with _good_ variable names:
             else if( haystack[ mid ] >  needle )   max  = mid-1;
             else /*                  <  needle )*/ min  = mid+1;
         }
-```
+ ```
 
-If we are doing a binary search and then insert if not found,
-we can tweak the binary search return the _negative position of middle._
-This will allow us to use that as the _starting_  position
-of where the key should be inserted into the array.
+ We are finding a `needle` in a `haystack`. :)
 
-```c
+ If we are doing a binary search and then insert if not found,
+ we can tweak the binary search to return the _negative position of middle._
+ This will allow us to use that as the _starting_  position
+ of where the key should be inserted into the array.
+
+ ```c
 // If the key is found , returns position > 0 where key was found
 // If the key not found, returns position < 0 of last best location for insert
 // ========================================================================
@@ -278,27 +283,27 @@ void insert_key( uint32_t key, int pos )
     gaWords[ mid ] = key;
     gnWords++;
 }
-```
+ ```
 
-And it is used like this:
+ And it is used like this:
 
-```c
-void demo()
-{
-    found = find_key( hash );
-    if( found < 0 )
-        insert_key( hash, -found );
-}
-```
+ ```c
+    void demo()
+    {
+        found = find_key( hash );
+        if( found < 0 )
+            insert_key( hash, -found );
+    }
+ ```
 
-Even better we can _merge_ the two algorithms ...
+ Even better we can _merge_ the two algorithms ...
 
-* `FindKey()`
-* `InsertKey()`
+   * `FindKey()`
+   * `InsertKey()`
 
-... into a combined version since there is common data.
+ ... into a combined version since there is common data.
 
-```c
+ ```c
 // If the key is  found, returns position >= 0 where key was found
 // If the key not found, returns -1 but with key inserted
 // ========================================================================
@@ -330,11 +335,11 @@ int find_key_insert( uint32_t key )
 
     return -1;
 }
-```
+ ```
 
-The full optimized single-threaded version is:
+ The full optimized single-threaded version is:
 
-* [test3 opt5.c](src/test3_opt5.c):
+ * [test3 opt5.c](src/test3_opt5.c):
 
 
 5\. Use multithreading. Using OpenMP this is pretty trivial using
@@ -342,6 +347,156 @@ The full optimized single-threaded version is:
 * Scatter
   * Divide-and-Conqueor
 * Gather
+
+
+# Scatter
+
+We don't need to use any mutexes, semaphores, or atomics or worry about deadlocks as
+this is a _lock-free_ algorithm. It is _trivial to parallized_ or what is known as
+an [Embarrassingly parallel](https://en.wikipedia.org/wiki/Embarrassingly_parallel) problem.
+
+Why?
+
+If we have a file of N size and T threads (or cores) each thread
+gets _part_ of the file N/T -- which is independent of the other threads!
+
+Each thread does this:
+
+* Generate a hash for each line
+* Use binary search to see if the hash is in the dictionary
+* If not, insert it in sorted order
+
+
+# Gather
+
+In the _scatter_ phase each thread handles **local duplicates**.
+In the _gather_ phase we need to handle **global duplicates** across all threads.
+
+Once all threads are done we need to perform an N-way mergesort.
+
+Let's pretend we have 4 cores (or threads), and these are the hashes:
+
+|Core 0|Core 1|Core 2|Core 3|
+|:-----|:-----|:-----|:-----|
+|a     |b     |b     |a     |
+|b     |c     |d     |e     |
+
+The sorted order should be:
+
+```
+a
+b
+c
+d
+e
+```
+
+We need to keep track of:
+
+* Current minimum value
+* the `head` for each thread's array of hashes _in sorted order_ that should next be processed:
+
+Pseudo-code:
+
+```
+    Left = Sum all unique lines that each thread has counted
+    Initialize array of thread's head to 0
+
+    Declare minimum hash
+    Total = 0
+
+    While there are lines left
+        Set minimum column to none
+
+        // Find minimum hash across all threads
+        For each thread id
+            if we have not processed all hashes in this thread
+                if we have no minumim column
+                    set minimum column to curent thread id
+                else
+                    if minimum hash > thread's head hash
+                        minimum hash = thread's head has
+                        minimum column = current thread id                     
+
+        // Skip duplicate hashes NOT in the minimum column
+        For each thread id
+            if we have not processed all hashes in this thread
+                if this thread is different from the minum hash
+                    if this thread's head hash is equal to the minimum hash
+                        increase thread's head pointer to next array item
+
+        // Found a unique line, add it
+        if we have a minimum column
+            Total = Total + 1
+            increase thread's head pointer to next array item
+            Left = Left - 1
+```
+
+The implementation is thus straight-forward from the algorithm:
+
+```c
+    // n-way MergeSort into 1 unique column
+    // We don't actually need to store the final array
+    // as we only need to keep track of the lowest current hash across all columns
+    while( nLeft > 0 )
+    {
+        iMinCol = -1;
+
+        for( iThread = 0; iThread <  gnThreadsActive; ++iThread )
+        {
+            i = _anThreadHead[ iThread ];
+            n = ganThreadWord[ iThread ];
+
+            // If this column has not finished merging ...
+            if( i < n )
+            {
+                hash = gapThreadData[ iThread ][ i ];
+
+                // Look for new lowest candidate
+                if( iMinCol < 0 )
+                {
+                    iMinCol = iThread;
+                    nMinVal = hash;
+                }
+                else
+                    if( nMinVal > hash )
+                    {
+                        nMinVal = hash ;
+                        iMinCol = iThread;
+                    }
+            }
+        }
+
+        for( iThread = 0; iThread <  gnThreadsActive; ++iThread )
+        {
+            if( iMinCol != iThread )
+            {
+                i = _anThreadHead[ iThread ];
+                n = ganThreadWord[ iThread ];
+
+                if( i < n )
+                {
+                    hash = gapThreadData[ iThread ][ i ];
+
+                    if( nMinVal == hash ) // remove duplicate if not in min col
+                    {
+                        _anThreadHead[ iThread ]++;
+                        nLeft--;
+                    }
+                }
+            }
+        }
+
+        if( iMinCol >= 0)
+        {
+            _anThreadHead[ iMinCol ]++;
+            gnWords++;
+
+            nLeft--;
+        }
+    }
+```
+
 
 I've annotated the OpenMP additions via:
 
