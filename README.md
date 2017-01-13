@@ -1,5 +1,16 @@
 # Perl: The Complete (Crap) Reference
 
+A.K.A _Binary Search Revisited_
+
+Why would someone take the time to write binary search in this day and age?
+
+Because:
+
+1. The only way to remain a good programmer is to constantly practice the basics, and
+2. It is trivial to write. See [Typical crappy Binary Search vs a Clean one
+](#typical-crappy-binary-search-vs-a-clean-one) but we're getting ahead of ourselves.
+
+I was cleaning out my old computer books and came a Perl book.
 In [Perl: The Complete Reference](https://www.amazon.com/Perl-Complete-Reference-Martin-Brown/dp/0072120002/),
 Chapter 19, _Perl Compiler_, Page 638, the author compares the speed of Perl with C.
 He gives various small examples:
@@ -126,7 +137,7 @@ There are numerous optimizations that can be done:
 2. Replace the dog slow string comparision with a hash compare, [FNV1a](https://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function)
 3. Compute a FNV1a hash on-the-fly
 
-```cpp
+ ```cpp
     const uint32_t FNV1A_PRIME = 0x01000193; //   16777619
     const uint32_t FNV1A_SEED  = 0x811C9DC5; // 2166136261
 
@@ -134,9 +145,12 @@ There are numerous optimizations that can be done:
     {
           return (byte ^ hash) * FNV1A_PRIME;
     }
-```
+ ```
 
-4\. Replace _Linear_ search with a _Binary Seach_
+4. Replace _Linear_ search with a _Binary Seach_
+
+
+# Typical crappy Binary Search vs a Clean one
 
 The typical Binary Search is given with this algorithm:
 
@@ -182,13 +196,14 @@ Notice the crappy variable names:
 * `x` which means `data`
 * the lowercase L, `l`, is horrible to read in some fonts
 * `m` is ambigious; does it mean minimum? median? maximum?
+* The key is called the badly named non-descript `t` instead of a good name like `key`
 
 Also the argument order should always be:
 
 * Array Size
 * Array Pointer
 
-Here is a cleaned up version:
+Here is a cleaned up version with _good_ variable names:
 
 ```c
     int BinarySearch( int size, uint32_t *haystack, uint32_t needle )
