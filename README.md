@@ -343,11 +343,13 @@ There are numerous optimizations that can be done:
  * [test3 opt5.c](src/test3_opt5.c):
 
 
-5\. Use multithreading. Using OpenMP this is pretty trivial using
+5\. Use multithreading
 
-* Scatter
+ Using OpenMP this is pretty trivial using
+
+ * Scatter
   * Divide-and-Conqueor
-* Gather
+ * Gather
 
 
 # Scatter
