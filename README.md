@@ -243,7 +243,7 @@ There are numerous optimizations that can be done:
 
  ```c
     int BinarySearch( uint32_t needle, int size, uint32_t *haystack )
-
+    {
         int min = 0;
         int mid = 0;
         int max = size-1;
@@ -256,6 +256,7 @@ There are numerous optimizations that can be done:
             else if( haystack[ mid ] >  needle )   max  = mid-1;
             else /*                  <  needle )*/ min  = mid+1;
         }
+    }
  ```
 
  We are finding a `needle` in a `haystack`. :)
