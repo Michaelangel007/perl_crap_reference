@@ -98,6 +98,10 @@ in [src/test3_annotated.c](src/test3_annotated.c)
 
 * https://github.com/Michaelangel007/perl_crap_reference/blob/master/src/test3_annotated.c
 
+And the cleaned up version in [src/test3_opt1.c](src/test3_opt1.c)
+
+*  https://github.com/Michaelangel007/perl_crap_reference/blob/master/src/test3_opt1.c
+
 The 3 biggest problems are:
 
 * The bloody thing doens't even compile !
