@@ -413,13 +413,13 @@ There are numerous optimizations that can be done:
 # Scatter
 
 We don't need to use any mutexes, semaphores, or atomics or worry about deadlocks as
-this is a _lock-free_ algorithm. It is _trivial to parallized_ or what is known as
-an [Embarrassingly parallel](https://en.wikipedia.org/wiki/Embarrassingly_parallel) problem.
+this is a _lock-free_ algorithm. It is _trivial to parallize_ or what is known as
+an [Embarrassingly Parallel](https://en.wikipedia.org/wiki/Embarrassingly_parallel) problem.
 
 Why?
 
 If we have a file of N size and T threads (or cores) each thread
-gets _part_ of the file N/T -- which is independent of the other threads!
+gets _part_ of the file -- size N/T -- which is _independent_ of the other threads!
 
 Each thread does this:
 
@@ -752,7 +752,7 @@ wget -O 2852.txt http://www.gutenberg.org/files/2852/2852-0.txt
 
 --
 
-Friday, January 13, 2017
+Sunday, January 15, 2017
 
 Michael "Code Poet" Pohoreski, aka Michaelangel007
 _"I have no keyboard, and I must code."_
