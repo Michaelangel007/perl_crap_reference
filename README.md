@@ -432,8 +432,8 @@ If we were simply counting lines we would be Good-To-Go (TM). But life is
 
 The _snafu_ is that we are counting _unique_ lines.  That means we need
 to generate a hash for the _entire_ line. If a line straddles the boundary
-between two threads we need to adjust the end of the previous thread,
-and adjust he start of the next thread.
+between two threads we need to adjust the _end of the previous_ thread,
+and adjust the _start of the next_ thread.
 
 Example:
 
