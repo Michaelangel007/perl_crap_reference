@@ -81,17 +81,17 @@ Here is the author's "equivalent" C version:
 
 *facepalm*
 
-
-# Bugs
-
-There are _numerous_ things wrong with the C version.
-How many **noob mistakes** can you spot?
+**How many _noob mistakes_ can you spot?**
 
 Take a minute.
 
-That _wasn't_ just a rhetorical question.
-One of the best ways to become a better code is to
-_find_ bugs in existing code that already has them.
+# Bugs
+
+That _wasn't_ just a rhetorical question by the way.
+
+There are _numerous_ things wrong with the C version.
+One of the _best_ ways to become a better programmer is to
+**read code** by _finding_ bugs in existing code that already has them.
 
 Once you're ready for all the answers here is the full list of everything wrong
 in [src/test3_annotated.c](src/test3_annotated.c)
