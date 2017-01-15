@@ -151,7 +151,7 @@ The author gives the _excuse:_
 
 There are numerous optimizations that can be done:
 
-1. Read the entire file into memory at once bypassing the C library buffering.
+1. Read the entire file into memory at once bypassing the [C Run-Time library](http://stackoverflow.com/questions/2766233/what-is-the-c-runtime-library) (CRT, aka `libc`) buffering.
 2. Replace the dog slow string comparision with a hash compare such as [FNV1a](https://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function)
 
  ```cpp
