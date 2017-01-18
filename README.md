@@ -233,12 +233,12 @@ There are numerous optimizations that can be done:
 
  Notice the crappy code style and variable names:
 
-  * What we are searching for is called the badly named and non-descript `t` instead of a good name like `key`
-  * the badly named `x` which means `data`
-  * the lowercase L, `l`, is _horrible to read_ in some fonts due to one `1` looking almost identical, instead of `lo`
-  * `m` is ambigious; does it mean minimum? median? maximum?
-  * `u` is OK, but better would be `hi`
-  * Useless, redundant comments
+  * `t` badly named and non-descript of what we are searching for; in contradisction to `key`
+  * `x` badly named `data`
+  * `l` lowercase `L` is _horrible to read_ in some fonts due to looking one `1` looking almost identical; better would be `lo`
+  * `m` is ambigious - does it mean minimum? median? maximum?
+  * `u` is OK; better would be `hi`
+  * Useless, redundant comments due to bad variable names
 
  Also the argument order should always be in a consistent fashion:
 
@@ -756,8 +756,8 @@ wget -O 2852.txt http://www.gutenberg.org/files/2852/2852-0.txt
 
 --
 
-Sunday, January 15, 2017
+Wednesday, January 18, 2017
 
 Michael "Code Poet" Pohoreski, aka Michaelangel007
-_"I have no keyboard, and I must code."_
+* _"I have no keyboard, and I must code."_
 
