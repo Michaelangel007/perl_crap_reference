@@ -1037,7 +1037,7 @@ wget -O 2852.txt http://www.gutenberg.org/files/2852/2852-0.txt
 * https://en.wikipedia.org/wiki/Binary_search_algorithm
 * http://stackoverflow.com/questions/24348613/c-two-different-binary-search-implementation-one-stuck-in-infinite-loop?rq=1
 * http://stackoverflow.com/questions/504335/what-are-the-pitfalls-in-implementing-binary-search?rq=1
-
+* http://softwareengineering.stackexchange.com/questions/49550/which-hashing-algorithm-is-best-for-uniqueness-and-speed
 
 # Special Thanks
 
